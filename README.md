@@ -10,9 +10,9 @@ A full-featured Flask Blog Application with:
 
 ---
 
-## 📸 Screenshotsgit
+## 📸 Demo
 
-Add some images of your blog pages here (Home, Post, Login).
+![App Screenshot](Screenshot.png)
 
 ---
 
