@@ -70,8 +70,8 @@ flask-blog/
 1. Clone the repo
 
 ```
-git clone https://github.com/your-username/flask-blog.git
-cd flask-blog
+git clone https://github.com/ayushi-gajendra/KeepUp_blog_website.git
+cd KeepUp_blog_website
 ```
 
 2. Create a virtual environment & activate it
