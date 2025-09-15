@@ -21,7 +21,7 @@ A full-featured Flask Blog Application with:
 - User registration & login (with hashed passwords)
 - Create, edit, delete blog posts (admin only)
 - View all posts and individual posts
-- Comment functionality (to be added)
+- Comment functionality
 - Responsive UI using Flask-Bootstrap
 - Rich-text editing with Flask-CKEditor
 - Database models with SQLAlchemy ORM
@@ -46,21 +46,23 @@ A full-featured Flask Blog Application with:
 
 ## 📂 Project Structure
 ```
+
 flask-blog/
 │── static/              # CSS, images, JS
-│── templates/           # Jinja2 HTML templates
-│   ├── index.html
-│   ├── register.html
-│   ├── login.html
-│   ├── post.html
-│   ├── make-post.html
-│   ├── about.html
-│   └── contact.html
+│── templates/           # HTML templates
+│   ├── index.html       # homepage showing all posts
+│   ├── register.html    # user registration
+│   ├── login.html       # user login
+│   ├── post.html        # individual blog post
+│   ├── make-post.html   # create/edit blog post
+│   ├── about.html       # static about page
+│   └── contact.html     # static contact page
 │── forms.py             # Flask-WTF form classes
-│── app.py               # Main Flask application
-│── posts.db             # SQLite database (auto-created)
-│── requirements.txt     # Python dependencies
-│── README.md            # Project documentation
+│── app.py               # main Flask application
+│── posts.db             # SQLite database (auto-created when running)
+│── requirements.txt     # project dependencies
+│── README.md            # documentation
+
 ```
 
 ## ⚡ Installation & Setup
