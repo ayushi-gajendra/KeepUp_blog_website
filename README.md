@@ -91,8 +91,6 @@ pip install -r requirements.txt
 python app.py
 ```
 
-Flask will start at: 👉 http://127.0.0.1:5001
-
 ## 📦 Requirements
 
 Add these to your requirements.txt:
@@ -105,7 +103,7 @@ Add these to your requirements.txt:
 - Flask-SQLAlchemy
 - Werkzeug
 
-## 🔑 Admin Controls (to implement)
+## 🔑 Admin Controls
 
 Only admin users can:
 - Create new posts
