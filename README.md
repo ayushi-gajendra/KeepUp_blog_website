@@ -45,7 +45,7 @@ Add some images of your blog pages here (Home, Post, Login).
 ---
 
 ## 📂 Project Structure
-
+```
 flask-blog/
 │── static/              # CSS, images, JS
 │── templates/           # Jinja2 HTML templates
@@ -59,9 +59,9 @@ flask-blog/
 │── forms.py             # Flask-WTF form classes
 │── app.py               # Main Flask application
 │── posts.db             # SQLite database (auto-created)
-│── requirements.txt      # Python dependencies
+│── requirements.txt     # Python dependencies
 │── README.md            # Project documentation
-
+```
 
 ## ⚡ Installation & Setup
 
