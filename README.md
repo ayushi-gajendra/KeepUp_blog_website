@@ -30,17 +30,17 @@ A full-featured Flask Blog Application with:
 
 ## 🛠️ Tech Stack
 
-- Backend: Flask
+- **Backend**: Flask
 
-- Database: SQLite (via SQLAlchemy ORM)
+- **Database**: SQLite (via SQLAlchemy ORM)
 
-- Frontend: Bootstrap 5 + Jinja Templates
+- **Frontend**: Bootstrap 5 + Jinja Templates
 
-- Authentication: Flask-Login
+- **Authentication**: Flask-Login
 
-- Forms & Validation: Flask-WTF
+- **Forms & Validation**: Flask-WTF
 
-- Password Security: Werkzeug
+- **Password Security**: Werkzeug
 
 ---
 
