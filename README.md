@@ -1,4 +1,4 @@
-# 📝 Flask Blog App
+# 📝 KeepUp - Flask Blog App
 
 A full-featured Flask Blog Application with:
 - User authentication (register, login, logout)
