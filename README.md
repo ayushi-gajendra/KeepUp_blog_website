@@ -47,21 +47,34 @@ A full-featured Flask Blog Application with:
 ## 📂 Project Structure
 ```
 
-flask-blog/
-│── static/              # CSS, images, JS
-│── templates/           # HTML templates
-│   ├── index.html       # homepage showing all posts
-│   ├── register.html    # user registration
-│   ├── login.html       # user login
-│   ├── post.html        # individual blog post
-│   ├── make-post.html   # create/edit blog post
-│   ├── about.html       # static about page
-│   └── contact.html     # static contact page
-│── forms.py             # Flask-WTF form classes
-│── main.py               # main Flask application
-│── posts.db             # SQLite database (auto-created when running)
-│── requirements.txt     # project dependencies
-│── README.md            # documentation
+KeepUp_blog_website/
+│── static/                     # Static files (CSS, JS, images)
+│   ├── styles.css              # custom CSS
+│   ├── scripts.js              # custom JavaScript
+│   ├── about-bg.jpg            # background image for About page
+│   ├── contact-bg.jpg          # background image for Contact page
+│   ├── home-bg.jpg             # background image for Home page
+│   ├── login-bg.jpg            # background image for Login page
+│   └── register-bg.jpg         # background image for Register page
+│
+│── templates/                  # HTML templates
+│   ├── index.html              # homepage showing all posts
+│   ├── register.html           # user registration
+│   ├── login.html              # user login
+│   ├── post.html               # individual blog post
+│   ├── make-post.html          # create/edit blog post
+│   ├── about.html              # static about page
+│   ├── contact.html            # static contact page
+│   ├── header.html             # header partial template
+│   └── footer.html             # footer partial template
+│
+│── forms.py                    # Flask-WTF form classes
+│── main.py                     # main Flask application
+│── posts.db                    # SQLite database (auto-created when running)
+│── requirements.txt            # project dependencies
+│── Screenshot.png              # app screenshot for README
+│── README.md                   # documentation
+│── .gitignore                  # ignored files for git
 
 ```
 
