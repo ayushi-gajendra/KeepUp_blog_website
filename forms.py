@@ -1,8 +1,9 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField
-from wtforms.validators import DataRequired, URL, Email, Length, EqualTo
+from wtforms import StringField, SubmitField, PasswordField
+from wtforms.validators import DataRequired, URL, Email, Length
 from flask_ckeditor import CKEditorField
 
+##WTForm for creating/editing blog posts
 class CreatePostForm(FlaskForm):
     title = StringField("Blog Post Title", validators=[DataRequired()])
     subtitle = StringField("Subtitle", validators=[DataRequired()])
@@ -10,17 +11,20 @@ class CreatePostForm(FlaskForm):
     body = CKEditorField("Blog Content", validators=[DataRequired()])
     submit = SubmitField("Submit Post")
 
+##WTForm for user registration
 class RegisterForm(FlaskForm):
-    name = StringField("Name", validators=[DataRequired()])
     email = StringField("Email", validators=[DataRequired(), Email()])
-    password = PasswordField("Password", validators=[DataRequired(), Length(min=6)])
-    confirm_password = PasswordField(
-        "Confirm Password",
-        validators=[DataRequired(), EqualTo("password", message="Passwords must match.")]
-    )
-    submit = SubmitField("Sign Up")
+    password = PasswordField("Password", validators=[DataRequired(), Length(min=6)]) # Added Length validator
+    name = StringField("Name", validators=[DataRequired()])
+    submit = SubmitField("Sign Me Up!")
 
+##WTForm for user login
 class LoginForm(FlaskForm):
     email = StringField("Email", validators=[DataRequired(), Email()])
     password = PasswordField("Password", validators=[DataRequired()])
-    submit = SubmitField("Log In")
+    submit = SubmitField("Let Me In!")
+
+##WTForm for adding comments
+class CommentForm(FlaskForm):
+    comment_text = CKEditorField("Comment", validators=[DataRequired()])
+    submit = SubmitField("Submit Comment")
