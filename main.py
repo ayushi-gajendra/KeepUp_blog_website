@@ -1,28 +1,26 @@
 from datetime import date
 from flask import Flask, abort, render_template, redirect, url_for, flash, request
-from flask_bootstrap import Bootstrap5
+from flask_bootstrap5 import Bootstrap5
 from flask_ckeditor import CKEditor
-# from flask_gravatar import Gravatar
 from flask_login import UserMixin, login_user, LoginManager, current_user, logout_user
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import relationship, DeclarativeBase, Mapped, mapped_column
 from sqlalchemy import Integer, String, Text
 from functools import wraps
 from werkzeug.security import generate_password_hash, check_password_hash
-# Import your forms from the forms.py
 from forms import CreatePostForm, RegisterForm, LoginForm
 
+# Initialize Flask and extensions
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
 ckeditor = CKEditor(app)
 Bootstrap5(app)
 
-# TODO: Configure Flask-Login
+# Configure Flask-Login for user management
 login_manager = LoginManager()
 login_manager.init_app(app)
 
-
-# CREATE DATABASE
+# Create the database with SQLAlchemy
 class Base(DeclarativeBase):
     pass
 
@@ -30,8 +28,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///posts.db'
 db = SQLAlchemy(model_class=Base)
 db.init_app(app)
 
-
-# CONFIGURE TABLES
+# Define the database table for blog posts
 class BlogPost(db.Model):
     __tablename__ = "blog_posts"
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
@@ -42,76 +39,74 @@ class BlogPost(db.Model):
     author: Mapped[str] = mapped_column(String(250), nullable=False)
     img_url: Mapped[str] = mapped_column(String(250), nullable=False)
 
-
-# TODO: Create a User table for all your registered users. 
+# Define the database table for users
 class User(UserMixin, db.Model):
-    __tablename__="users"
+    __tablename__ = "users"
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     email: Mapped[str] = mapped_column(String(100), unique=True, nullable=False)
     password: Mapped[str] = mapped_column(String(100), nullable=False)
     name: Mapped[str] = mapped_column(String(100), nullable=False)
 
-
+# Create database tables if they don't exist
 with app.app_context():
     db.create_all()
 
-
+# Flask-Login user loader callback
 @login_manager.user_loader
 def load_user(user_id):
     return db.session.get(User, int(user_id))
 
-
-# TODO: Use Werkzeug to hash the user's password when creating a new user.
+# Route for user registration
 @app.route('/register', methods=["GET", "POST"])
 def register():
-    form=RegisterForm()
+    form = RegisterForm()
     if form.validate_on_submit():
-        hash_and_salted_password= generate_password_hash(
+        # Hash and salt the password for security
+        hash_and_salted_password = generate_password_hash(
             form.password.data,
             method='pbkdf2:sha256',
             salt_length=8
         )
-        user= User(
-            email= form.email.data,
-            password= hash_and_salted_password,
-            name= form.name.data
+        # Create a new user and add to the database
+        user = User(
+            email=form.email.data,
+            password=hash_and_salted_password,
+            name=form.name.data
         )
         db.session.add(user)
         db.session.commit()
         return redirect(url_for("get_all_posts"))
     return render_template("register.html", form=form)
 
-
-# TODO: Retrieve a user from the database based on their email. 
+# Route for user login
 @app.route('/login')
 def login():
     return render_template("login.html")
 
-
+# Route for user logout
 @app.route('/logout')
 def logout():
     return redirect(url_for('get_all_posts'))
 
-
+# Route to display all blog posts
 @app.route('/')
 def get_all_posts():
     result = db.session.execute(db.select(BlogPost))
     posts = result.scalars().all()
     return render_template("index.html", all_posts=posts)
 
-
-# TODO: Allow logged-in users to comment on posts
+# Route to display a single blog post
 @app.route("/post/<int:post_id>")
 def show_post(post_id):
     requested_post = db.get_or_404(BlogPost, post_id)
     return render_template("post.html", post=requested_post)
 
-
-# TODO: Use a decorator so only an admin user can create a new post
+# Route to add a new blog post
 @app.route("/new-post", methods=["GET", "POST"])
 def add_new_post():
     form = CreatePostForm()
     if form.validate_on_submit():
+        # Create a new blog post and add to the database
         new_post = BlogPost(
             title=form.title.data,
             subtitle=form.subtitle.data,
@@ -125,11 +120,11 @@ def add_new_post():
         return redirect(url_for("get_all_posts"))
     return render_template("make-post.html", form=form)
 
-
-# TODO: Use a decorator so only an admin user can edit a post
+# Route to edit an existing blog post
 @app.route("/edit-post/<int:post_id>", methods=["GET", "POST"])
 def edit_post(post_id):
     post = db.get_or_404(BlogPost, post_id)
+    # Populate the form with existing post data
     edit_form = CreatePostForm(
         title=post.title,
         subtitle=post.subtitle,
@@ -138,6 +133,7 @@ def edit_post(post_id):
         body=post.body
     )
     if edit_form.validate_on_submit():
+        # Update the post with new data
         post.title = edit_form.title.data
         post.subtitle = edit_form.subtitle.data
         post.img_url = edit_form.img_url.data
@@ -147,8 +143,7 @@ def edit_post(post_id):
         return redirect(url_for("show_post", post_id=post.id))
     return render_template("make-post.html", form=edit_form, is_edit=True)
 
-
-# TODO: Use a decorator so only an admin user can delete a post
+# Route to delete a blog post
 @app.route("/delete/<int:post_id>")
 def delete_post(post_id):
     post_to_delete = db.get_or_404(BlogPost, post_id)
@@ -156,16 +151,16 @@ def delete_post(post_id):
     db.session.commit()
     return redirect(url_for('get_all_posts'))
 
-
+# Route for the About page
 @app.route("/about")
 def about():
     return render_template("about.html")
 
-
+# Route for the Contact page
 @app.route("/contact")
 def contact():
     return render_template("contact.html")
 
-
+# Main entry point for the application
 if __name__ == "__main__":
     app.run(debug=True, port=5001)
