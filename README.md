@@ -58,7 +58,7 @@ flask-blog/
 │   ├── about.html       # static about page
 │   └── contact.html     # static contact page
 │── forms.py             # Flask-WTF form classes
-│── app.py               # main Flask application
+│── main.py               # main Flask application
 │── posts.db             # SQLite database (auto-created when running)
 │── requirements.txt     # project dependencies
 │── README.md            # documentation
