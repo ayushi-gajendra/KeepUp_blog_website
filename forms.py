@@ -1,9 +1,11 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, PasswordField
-from wtforms.validators import DataRequired, URL, Email, Length
+from wtforms import StringField, SubmitField
+from wtforms.fields.simple import PasswordField
+from wtforms.validators import DataRequired, URL, email
 from flask_ckeditor import CKEditorField
 
-##WTForm for creating/editing blog posts
+
+# WTForm for creating a blog post
 class CreatePostForm(FlaskForm):
     title = StringField("Blog Post Title", validators=[DataRequired()])
     subtitle = StringField("Subtitle", validators=[DataRequired()])
@@ -11,20 +13,23 @@ class CreatePostForm(FlaskForm):
     body = CKEditorField("Blog Content", validators=[DataRequired()])
     submit = SubmitField("Submit Post")
 
-##WTForm for user registration
+
+# RegisterForm to register new users
 class RegisterForm(FlaskForm):
-    email = StringField("Email", validators=[DataRequired(), Email()])
-    password = PasswordField("Password", validators=[DataRequired(), Length(min=6)]) # Added Length validator
-    name = StringField("Name", validators=[DataRequired()])
-    submit = SubmitField("Sign Me Up!")
+    name = StringField(label="Name", validators=[DataRequired()])
+    email= StringField(label="Email", validators=[DataRequired()])
+    password= PasswordField(label="Password", validators=[DataRequired()])
+    submit= SubmitField(label="Submit")
 
-##WTForm for user login
+
+# LoginForm to login existing users
 class LoginForm(FlaskForm):
-    email = StringField("Email", validators=[DataRequired(), Email()])
-    password = PasswordField("Password", validators=[DataRequired()])
-    submit = SubmitField("Let Me In!")
+    email= StringField(label="Email", validators=[DataRequired()])
+    password= PasswordField(label="Password", validators=[DataRequired()])
+    submit = SubmitField(label="Submit")
 
-##WTForm for adding comments
+
+# CommentForm so users can leave comments below posts
 class CommentForm(FlaskForm):
-    comment_text = CKEditorField("Comment", validators=[DataRequired()])
-    submit = SubmitField("Submit Comment")
+    text= CKEditorField(label="Comment", validators=[DataRequired()])
+    submit=SubmitField(label="Post Comment")
